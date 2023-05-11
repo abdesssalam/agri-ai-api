@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class AuthController extends Controller
 {
@@ -42,6 +43,7 @@ class AuthController extends Controller
         $user->save();
         $token = $user->createToken('auth_token')->plainTextToken;
 
+        // $user->sendEmailVerificationNotification();
         return response()->json([
             'user' => $user,
             'access_token' => $token,
@@ -75,10 +77,6 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        // // Auth::user()->token_get_all()->delete();
-        // return response()->json([
-        //     'user' => $request->user(),
-        // ]);
         $request->user()->tokens()->delete();
 
         return response()->json([
@@ -92,5 +90,34 @@ class AuthController extends Controller
         return response()->json([
             'user' => $user,
         ]);
+    }
+
+    public function uploadPhoto(Request $request)
+    {
+        $validatedData = $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Get the user ID from the authenticated user
+        $userId = auth()->user()->id;
+        $previusPhoto =  auth()->user()->img;
+        // Generate a unique name for the image file
+        $imageName = time() . '.' . $request->photo->extension();
+
+        // Store the image file in the public directory
+        $path = $request->photo->store('profiles', ['disk' => 'profiles'], $imageName);
+
+        // Update the user's img_url field with the image file path
+        $user = User::find($userId);
+        $user->img = $path;
+        $user->save();
+        //remove photo
+        if (file_exists(public_path(($previusPhoto)))) {
+            unlink(public_path(($previusPhoto)));
+            // Storage::delete($previusPhoto);
+            return response()->json(['success' => 'Your profile has been updated successfully.']);
+        } else {
+            return response()->json(['success' => ' not Your profile has been updated successfully.']);
+        }
     }
 }

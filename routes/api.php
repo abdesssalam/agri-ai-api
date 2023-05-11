@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logou
 Route::middleware('auth:sanctum')->get('user', [AuthController::class, 'getUser']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/users/upload-photo', [AuthController::class, 'uploadPhoto']);
     Route::post('/plants', [PlantsConroller::class, 'store']);
     Route::put('/plants/{id}', [PlantsConroller::class, 'update']);
     Route::delete('/plants/{id}', [PlantsConroller::class, 'destroy']);

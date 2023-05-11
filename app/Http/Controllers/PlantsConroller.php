@@ -64,11 +64,13 @@ class PlantsConroller extends Controller
         $plant->delete();
         return response()->json(['message' => 'Plant deleted successfully'], 200);
     }
-    public function toGarden(string $id)
+
+    public function toGarden(Request $request, string $id)
     {
         $plant = Plant::findOrFail($id);
+
         $plant->update(['is_garden' => 1]);
 
-        return response()->json(['plant' => $plant], 200);
+        return response()->json(['message' => 'Plant moved successfully'], 200);
     }
 }
