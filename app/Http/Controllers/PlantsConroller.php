@@ -73,4 +73,12 @@ class PlantsConroller extends Controller
 
         return response()->json(['message' => 'Plant moved successfully'], 200);
     }
+    public function fromGarden(Request $request, string $id)
+    {
+        $plant = Plant::findOrFail($id);
+
+        $plant->update(['is_garden' => 0]);
+
+        return response()->json(['message' => 'Plant moved successfully'], 200);
+    }
 }

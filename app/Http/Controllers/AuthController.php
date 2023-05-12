@@ -115,9 +115,27 @@ class AuthController extends Controller
         if (file_exists(public_path(($previusPhoto)))) {
             unlink(public_path(($previusPhoto)));
             // Storage::delete($previusPhoto);
-            return response()->json(['success' => 'Your profile has been updated successfully.']);
+            return response()->json(['img' => $path]);
         } else {
             return response()->json(['success' => ' not Your profile has been updated successfully.']);
         }
+    }
+
+    public function update(Request $request)
+    {
+        $user = User::findOrFail(auth()->user()->id);
+
+        $user->fill($request->only([
+            'firstName',
+            'lastName',
+            'username',
+            'img',
+            'email',
+            'password',
+        ]));
+
+        $user->save();
+
+        return response()->json(['message' => 'User updated successfully', 'user' => $user]);
     }
 }

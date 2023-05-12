@@ -25,9 +25,11 @@ Route::middleware('auth:sanctum')->get('user', [AuthController::class, 'getUser'
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users/upload-photo', [AuthController::class, 'uploadPhoto']);
+    Route::put('/users/edit', [AuthController::class, 'update']);
     Route::post('/plants', [PlantsConroller::class, 'store']);
     Route::put('/plants/{id}', [PlantsConroller::class, 'update']);
     Route::delete('/plants/{id}', [PlantsConroller::class, 'destroy']);
     Route::get('/plants', [PlantsConroller::class, 'index']);
     Route::patch('/plants/{id}/to-garden', [PlantsConroller::class, 'toGarden']);
+    Route::patch('/plants/{id}/from-garden', [PlantsConroller::class, 'toGarden']);
 });
