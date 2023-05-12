@@ -79,6 +79,6 @@ class PlantsConroller extends Controller
 
         $plant->update(['is_garden' => 0]);
 
-        return response()->json(['message' => 'Plant moved successfully'], 200);
+        return response()->json(['message' => 'Plant removed successfully'], 200);
     }
 }

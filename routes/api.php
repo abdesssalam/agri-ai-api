@@ -31,5 +31,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/plants/{id}', [PlantsConroller::class, 'destroy']);
     Route::get('/plants', [PlantsConroller::class, 'index']);
     Route::patch('/plants/{id}/to-garden', [PlantsConroller::class, 'toGarden']);
-    Route::patch('/plants/{id}/from-garden', [PlantsConroller::class, 'toGarden']);
+    Route::patch('/plants/{id}/from-garden', [PlantsConroller::class, 'fromGarden']);
 });
