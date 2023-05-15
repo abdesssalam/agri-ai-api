@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlantsConroller;
 use Illuminate\Http\Request;
@@ -24,6 +25,8 @@ Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logou
 Route::middleware('auth:sanctum')->get('user', [AuthController::class, 'getUser']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/send-verification-code', [VerificationController::class, 'sendVerificationCode']);
+    Route::post('/verify-code', [VerificationController::class, 'checkVerificationCode']);
     Route::post('/users/upload-photo', [AuthController::class, 'uploadPhoto']);
     Route::put('/users/edit', [AuthController::class, 'update']);
     Route::post('/plants', [PlantsConroller::class, 'store']);
