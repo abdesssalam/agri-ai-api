@@ -24,9 +24,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
 Route::middleware('auth:sanctum')->get('user', [AuthController::class, 'getUser']);
 
+Route::post('/send-verification-code', [VerificationController::class, 'sendVerificationCode']);
+Route::post('/verify-code', [VerificationController::class, 'checkVerificationCode']);
+Route::post('/forget_password', [VerificationController::class, 'forget_password']);
+
+
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/send-verification-code', [VerificationController::class, 'sendVerificationCode']);
-    Route::post('/verify-code', [VerificationController::class, 'checkVerificationCode']);
+
     Route::post('/users/upload-photo', [AuthController::class, 'uploadPhoto']);
     Route::put('/users/edit', [AuthController::class, 'update']);
     Route::post('/plants', [PlantsConroller::class, 'store']);

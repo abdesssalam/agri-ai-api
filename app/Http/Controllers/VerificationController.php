@@ -6,12 +6,13 @@ use App\Mail\VerificationMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Js;
 
 class VerificationController extends Controller
 {
     public function sendVerificationCode(Request $request)
     {
-        $user = User::find(Auth()->user()->id);
+        $user = User::firstWhere("email", $request->email);
 
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
@@ -27,23 +28,33 @@ class VerificationController extends Controller
     }
     public function checkVerificationCode(Request $request)
     {
+
         // Get the user for whom you want to check the verification code
-        $user = User::find(Auth()->user()->id);
+        $user = User::firstWhere("email", $request->email);
 
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
-        $enteredCode = $request->input('verification_code');
+        $enteredCode = $request->code;
 
         $savedCode = $user->verification_code;
-
         if ($enteredCode == $savedCode) {
+
             $user->is_verified = true;
             $user->save();
             return response()->json(['message' => 'Verification successful']);
         } else {
 
-            return response()->json(['error' => 'Invalid verification code'], 400);
+            return response()->json(['error' => 'Invalid verification code']);
         }
+    }
+
+    public function forget_password(Request $request)
+    {
+
+        $user = User::firstWhere("email", $request->email);
+
+        if (!$user)  return response()->json(['error' => 'User not found'], 404);
+        return $this->sendVerificationCode($request);
     }
 }
