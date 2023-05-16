@@ -42,10 +42,10 @@ class VerificationController extends Controller
 
             $user->is_verified = true;
             $user->save();
-            return response()->json(['message' => 'Verification successful']);
+            return response()->json(['message' => 'ok']);
         } else {
 
-            return response()->json(['error' => 'Invalid verification code']);
+            return response()->json(['message' => 'non']);
         }
     }
 
