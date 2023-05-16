@@ -131,11 +131,21 @@ class AuthController extends Controller
             'username',
             'img',
             'email',
-            'password',
         ]));
 
         $user->save();
 
         return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+    }
+
+    public function new_password(Request $request)
+    {
+        $user = User::firstWhere("email", $request->email);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return response()->json(['message' => 'ok']);
     }
 }
