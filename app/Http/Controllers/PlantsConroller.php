@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\note;
 use App\Models\Plant;
 use Illuminate\Http\Request;
 
@@ -80,5 +81,49 @@ class PlantsConroller extends Controller
         $plant->update(['is_garden' => 0]);
 
         return response()->json(['message' => 'Plant removed successfully'], 200);
+    }
+
+    public function add_note(Request $request)
+    {
+        $request->validate([
+            'plant_id' => 'required',
+            'text' => 'required',
+        ]);
+        $note = new note(
+            [
+                'plant_id' => $request->plant_id,
+                'text' => $request->text
+            ]
+        );
+        $note->save();
+        return response()->json([
+            'message' => 'ok'
+        ]);
+    }
+
+    public function remove_note(string $id)
+    {
+        $note = note::findOrFail($id);
+        $note->delete();
+        return response()->json([
+            'message' => 'ok'
+        ]);
+    }
+
+    public function edit_note(Request $request, string $id)
+    {
+        $note = note::findOrFail($id);
+        $note->text = $request->text;
+        $note->save();
+        return response()->json([
+            'message' => 'ok'
+        ]);
+    }
+    public function get_notes(string $id)
+    {
+        $plant = Plant::findOrFail($id);
+        return response()->json(
+            $plant->notes()
+        );
     }
 }

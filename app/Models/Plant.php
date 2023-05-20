@@ -20,7 +20,7 @@ class Plant extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function plants()
+    public function notes()
     {
         return $this->hasMany(note::class);
     }

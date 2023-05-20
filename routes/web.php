@@ -1,8 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\VerificationController;
+
+
+
+// use Illuminate\Support\Facades\Auth;
+// use App\Http\Controllers\Auth\VerificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,9 +22,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes();
+// Route::get('/email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 // Route::group(['middleware' => ['auth']], function () {
 
 //     /**
@@ -30,3 +34,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //     Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
 //     Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
 // });
+
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

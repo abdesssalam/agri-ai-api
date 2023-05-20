@@ -22,10 +22,10 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app['auth']->viaRequest('api', function ($request) {
-            return Auth::guard('api')->user();
-        });
+        // $this->app['auth']->viaRequest('api', function ($request) {
+        //     return Auth::guard('api')->user();
+        // });
 
-        Auth::routes(['verify' => true]);
+        // Auth::routes(['verify' => true]);
     }
 }

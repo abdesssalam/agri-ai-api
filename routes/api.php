@@ -3,7 +3,6 @@
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PlantsConroller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,4 +39,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/plants', [PlantsConroller::class, 'index']);
     Route::patch('/plants/{id}/to-garden', [PlantsConroller::class, 'toGarden']);
     Route::patch('/plants/{id}/from-garden', [PlantsConroller::class, 'fromGarden']);
+
+    Route::post('/note', [PlantsConroller::class, 'add_note']);
+    Route::get('/notes', [PlantsConroller::class, 'get_notes']);
+    Route::put('/note', [PlantsConroller::class, 'edit_note']);
+    Route::delete('/note', [PlantsConroller::class, 'remove_note']);
 });
