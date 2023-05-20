@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/plants/{id}/from-garden', [PlantsConroller::class, 'fromGarden']);
 
     Route::post('/note', [PlantsConroller::class, 'add_note']);
-    Route::get('/notes', [PlantsConroller::class, 'get_notes']);
-    Route::put('/note', [PlantsConroller::class, 'edit_note']);
-    Route::delete('/note', [PlantsConroller::class, 'remove_note']);
+    Route::get('/notes/{id}', [PlantsConroller::class, 'get_notes']);
+    Route::post('/note/{id}', [PlantsConroller::class, 'edit_note']);
+    Route::delete('/note/{id}', [PlantsConroller::class, 'remove_note']);
 });

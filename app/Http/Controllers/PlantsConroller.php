@@ -85,16 +85,21 @@ class PlantsConroller extends Controller
 
     public function add_note(Request $request)
     {
+
         $request->validate([
             'plant_id' => 'required',
             'text' => 'required',
         ]);
+
         $note = new note(
             [
                 'plant_id' => $request->plant_id,
                 'text' => $request->text
             ]
         );
+        // return response()->json([
+        //     'message' => 'ok'
+        // ]);
         $note->save();
         return response()->json([
             'message' => 'ok'
@@ -122,8 +127,10 @@ class PlantsConroller extends Controller
     public function get_notes(string $id)
     {
         $plant = Plant::findOrFail($id);
+
         return response()->json(
-            $plant->notes()
+            $plant->notes
+
         );
     }
 }
