@@ -24,11 +24,12 @@ class AuthController extends Controller
 
 
 
-        $username = '';
+        $username = str_replace($request->lastName, '', ' ');
         $unique = false;
 
         while (!$unique) {
-            $username = $request->lastName . rand(1000, 9999); // Generate a unique username
+
+            $username = $username . rand(1000, 9999); // Generate a unique username
             $unique = !User::where('username', $username)->exists(); // Check if the username already exists in the database
         }
 

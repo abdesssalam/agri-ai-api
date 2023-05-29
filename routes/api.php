@@ -27,7 +27,11 @@ Route::post('/send-verification-code', [VerificationController::class, 'sendVeri
 Route::post('/verify-code', [VerificationController::class, 'checkVerificationCode']);
 Route::post('/forget_password', [VerificationController::class, 'forget_password']);
 Route::post('/reset_password', [AuthController::class, 'new_password']);
-
+Route::get("/test", function () {
+    return response()->json([
+        'message' => 'ok'
+    ]);
+});
 
 Route::middleware('auth:sanctum')->group(function () {
 
